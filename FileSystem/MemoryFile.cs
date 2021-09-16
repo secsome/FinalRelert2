@@ -11,33 +11,36 @@ namespace FinalRelert2.FileSystem
 {
     unsafe class MemoryFile : IRelease
     {
-        
-        public MemoryFile(byte[] src)
+
+        protected MemoryFile(byte[] src)
         {
-            this.buffer = src;
+            this.Buffer = (byte*)Marshal.AllocHGlobal(src.Length);
+            Marshal.Copy(src, 0, (IntPtr)this.Buffer, src.Length);
+            this.Length = src.Length;
         }
 
-        public MemoryFile(string path)
+        protected MemoryFile(string path)
         {
-            this.buffer = File.Exists(path) ? File.ReadAllBytes(path) : null;
+            if(File.Exists(path))
+            {
+                var src = File.ReadAllBytes(path);
+                this.Buffer = (byte*)Marshal.AllocHGlobal(src.Length);
+                Marshal.Copy(src, 0, (IntPtr)this.Buffer, src.Length);
+                this.Length = src.Length;
+            }
         }
 
         public bool Release()
         {
-            this.buffer = null;
+            Marshal.FreeHGlobal((IntPtr)this.Buffer);
+            this.Buffer = null;
+            this.Length = 0;
             return true;
-        }
-
-        protected void GetByteAt(int at, int len, IntPtr ptr)
-        {
-            Marshal.Copy(buffer, at, ptr, len);
         }
 
         protected T GetValue<T>(int at) where T : unmanaged
         {
-            T ret;
-            GetByteAt(at, sizeof(T), new IntPtr(&ret));
-            return ret;
+            return *(T*)this.Buffer[at];
         }
 
         protected T[] GetArray<T>(int at, int len) where T : unmanaged
@@ -48,8 +51,9 @@ namespace FinalRelert2.FileSystem
             return ret;
         }
 
-        public bool IsValid { get { return buffer != null; } }
+        protected bool IsValid { get { return Buffer != null && this.Length != 0; } }
 
-        private byte[] buffer;
+        protected byte* Buffer { get; set; }
+        protected int Length { get; set; }
     }
 }

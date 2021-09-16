@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\WWCompression.cs" />
+    <Compile Include="Algorithm\ShapeCompressionEncoding.cs" />
     <Compile Include="CFinalSunApp.cs" />
     <Compile Include="CFinalSunDlg.cs">
       <SubType>Form</SubType>
@@ -58,6 +60,7 @@
     <Compile Include="CINIMethods.cs" />
     <Compile Include="CMixFile.cs" />
     <Compile Include="FileSystem\MemoryFile.cs" />
+    <Compile Include="FileSystem\ShapeFile.cs" />
     <Compile Include="Interfaces\IRelease.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
