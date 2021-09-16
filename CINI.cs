@@ -7,8 +7,44 @@ using System.IO;
 
 namespace FinalRelert2
 {
+    class CINIFile
+    {
+        public static CINI Rules = new CINI();
+        public static CINI Art = new CINI();
+        public static CINI Turtorial = new CINI();
+        public static CINI Sound = new CINI();
+        public static CINI Eva = new CINI();
+        public static CINI Theme = new CINI();
+        public static CINI Ai = new CINI();
+        public static CINI Temperate = new CINI();
+        public static CINI Snow = new CINI();
+        public static CINI Urban = new CINI();
+        public static CINI NewUrban = new CINI();
+        public static CINI Lunar = new CINI();
+        public static CINI Desert = new CINI();
+        public static CINI FAData = new CINI();
+        public static CINI FALanguage = new CINI();
+        public static CINI CurrentDocument = new CINI();
+        public static CINI CurrentTheater = null;
+    }
+
+    class CINI
+    {
+        public CINIFileOperation fileOperation { get; private set; }
+
+        public CINI()
+        {
+            this.fileOperation = new CINIFileOperation();
+        }
+
+    }
+
     class CINISection
     {
+        private int IndexCounter = 0;
+        public Dictionary<string, string> EntityDict { get; private set; }
+        public Dictionary<string, int> IndexDict { get; private set; }
+
         public CINISection()
         {
             this.EntityDict = new Dictionary<string, string>();
@@ -44,42 +80,23 @@ namespace FinalRelert2
             IndexDict[key] = ++IndexCounter;
         }
 
-        private int IndexCounter = 0;
-
-        public Dictionary<string, string> EntityDict { get; private set; }
-        public Dictionary<string, int> IndexDict { get; private set; }
     }
 
-    class CINI
+    class CINIFileOperation
     {
-        public static CINI Rules = new CINI();
-        public static CINI Art = new CINI();
-        public static CINI Turtorial = new CINI();
-        public static CINI Sound = new CINI();
-        public static CINI Eva = new CINI();
-        public static CINI Theme = new CINI();
-        public static CINI Ai = new CINI();
-        public static CINI Temperate = new CINI();
-        public static CINI Snow = new CINI();
-        public static CINI Urban = new CINI();
-        public static CINI NewUrban = new CINI();
-        public static CINI Lunar = new CINI();
-        public static CINI Desert = new CINI();
-        public static CINI FAData = new CINI();
-        public static CINI FALanguage = new CINI();
-        public static CINI CurrentDocument = new CINI();
-        public static CINI CurrentTheater = null;
+        private Dictionary<string, CINISection> Dict { get; set; }
+        public string INIPath { get; private set; }
 
-        public CINI()
+        public CINIFileOperation()
         {
-            Dict = new Dictionary<string, CINISection>();
-            INIPath = string.Empty;
+            this.Dict = new Dictionary<string, CINISection>();
+            this.INIPath = string.Empty;
         }
 
         public bool Release()
         {
-            Dict.Clear();
-            INIPath = string.Empty;
+            this.Dict.Clear();
+            this.INIPath = string.Empty;
 
             return true;
         }
@@ -89,33 +106,32 @@ namespace FinalRelert2
             StreamReader sr = new StreamReader(ms);
 
             string buffer = string.Empty;
-            while (!sr.EndOfStream) 
+            while (!sr.EndOfStream)
             {
                 buffer = sr.ReadLine();
                 buffer.Trim();
-                if (buffer.Length >= 2 && buffer[0] == '[' && buffer.Contains(']')) 
+                if (buffer.Length >= 2 && buffer[0] == '[' && buffer.Contains(']'))
                     break;
             }
 
-            while (!sr.EndOfStream) 
+            while (!sr.EndOfStream)
             {
                 int last = buffer.IndexOf(']');
                 if (last != -1)
                     buffer = buffer.Substring(1, last - 1);
 
                 CINISection section;
-                bool flag = Dict.TryGetValue(buffer, out section);
-                if (!flag)
+                if (!this.Dict.TryGetValue(buffer, out section))
                 {
                     section = new CINISection();
-                    Dict.Add(buffer, section);
+                    this.Dict.Add(buffer, section);
                 }
 
-                while (!sr.EndOfStream) 
+                while (!sr.EndOfStream)
                 {
                     buffer = sr.ReadLine();
 
-                    if (buffer.Length == 0) 
+                    if (buffer.Length == 0)
                         continue;
 
                     if (buffer[0] == '[' && buffer.Contains(']'))
@@ -136,7 +152,7 @@ namespace FinalRelert2
                 }
             }
 
-            foreach (var section in Dict)
+            foreach (var section in this.Dict)
                 section.Value.UpdateSectionIndice();
 
             return true;
@@ -157,8 +173,5 @@ namespace FinalRelert2
                 return false;
             }
         }
-
-        private Dictionary<string, CINISection> Dict { get; set; }
-        public string INIPath { get; private set; }
     }
 }
