@@ -12,10 +12,17 @@ namespace FinalRelert2
 {
     public partial class CFinalSunDlg : Form
     {
+        public static CFinalSunDlg Instance
+        {
+            get
+            {
+                return CFinalSunApp.Instance.MainDialog;
+            }
+        }
+
         public CFinalSunDlg()
         {
             InitializeComponent();
-
 
         }
     }

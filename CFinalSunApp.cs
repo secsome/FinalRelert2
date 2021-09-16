@@ -13,23 +13,23 @@ namespace FinalRelert2
 
         public CFinalSunApp()
         {
-            ExePath = Environment.CurrentDirectory;
-            MapPath = string.Empty;
-            FilePath = string.Empty;
-            MainDialog = new CFinalSunDlg();
+            this.ExePath = Environment.CurrentDirectory;
+            this.MapPath = string.Empty;
+            this.FilePath = string.Empty;
         }
 
         public void Run()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            this.MainDialog = new CFinalSunDlg();
             Application.Run(MainDialog);
         }
 
-        public string ExePath;
-        public string MapPath;
-        public string FilePath;
-        public CFinalSunDlg MainDialog;
+        public string ExePath { get; private set; }
+        public string MapPath { get; private set; }
+        public string FilePath { get; private set; }
+        public CFinalSunDlg MainDialog { get; private set; }
 
     }
 }

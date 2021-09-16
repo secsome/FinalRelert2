@@ -9,16 +9,45 @@ namespace FinalRelert2
 {
     class CINISection
     {
-        public Dictionary<string, string> EntityDict = new Dictionary<string, string>();
-        public Dictionary<string, int> IndexDict = new Dictionary<string, int>();
+        public CINISection()
+        {
+            this.EntityDict = new Dictionary<string, string>();
+            this.IndexDict = new Dictionary<string, int>();
+        }
 
-        void AddEntry(string key,string value)
+        public bool Release()
+        {
+            this.EntityDict.Clear();
+            this.IndexDict.Clear();
+            this.IndexCounter = 0;
+            return true;
+        }
+
+        public void UpdateSectionIndice()
+        {
+            IndexCounter = 0;
+
+            var sd = new SortedDictionary<int, string>();
+            foreach (var pair in IndexDict)
+                sd.Add(pair.Value, pair.Key);
+            IndexDict.Clear();
+
+            foreach (var pair in sd)
+                IndexDict[pair.Value] = ++IndexCounter;
+        }
+
+        public void AddEntry(string key,string value)
         {
             EntityDict[key] = value;
             if (IndexDict.ContainsKey(key))
                 IndexDict.Remove(key);
-            IndexDict[key] = IndexDict.Count;
+            IndexDict[key] = ++IndexCounter;
         }
+
+        private int IndexCounter = 0;
+
+        public Dictionary<string, string> EntityDict { get; private set; }
+        public Dictionary<string, int> IndexDict { get; private set; }
     }
 
     class CINI
@@ -47,6 +76,14 @@ namespace FinalRelert2
             INIPath = string.Empty;
         }
 
+        public bool Release()
+        {
+            Dict.Clear();
+            INIPath = string.Empty;
+
+            return true;
+        }
+
         public bool ParseFile(MemoryStream ms)
         {
             StreamReader sr = new StreamReader(ms);
@@ -56,7 +93,7 @@ namespace FinalRelert2
             {
                 buffer = sr.ReadLine();
                 buffer.Trim();
-                if (buffer[0] == '[' && buffer.Contains(']'))
+                if (buffer.Length >= 2 && buffer[0] == '[' && buffer.Contains(']')) 
                     break;
             }
 
@@ -66,7 +103,13 @@ namespace FinalRelert2
                 if (last != -1)
                     buffer = buffer.Substring(1, last - 1);
 
-                CINISection section = Dict[buffer];
+                CINISection section;
+                bool flag = Dict.TryGetValue(buffer, out section);
+                if (!flag)
+                {
+                    section = new CINISection();
+                    Dict.Add(buffer, section);
+                }
 
                 while (!sr.EndOfStream) 
                 {
@@ -81,17 +124,22 @@ namespace FinalRelert2
                     int comment = buffer.IndexOf(';');
                     if (comment != -1)
                         buffer = buffer.Substring(0, comment);
-                    buffer.Trim();
 
                     int divider = buffer.IndexOf('=');
-                    if (divider != -1)
+                    if (divider == -1)
                         continue;
 
-                    string key = buffer.Substring(0, divider);
-                    
+                    string key = buffer.Substring(0, divider).Trim();
+                    string value = buffer.Substring(divider + 1).Trim();
+
+                    section.AddEntry(key, value);
                 }
             }
 
+            foreach (var section in Dict)
+                section.Value.UpdateSectionIndice();
+
+            return true;
         }
 
         public bool ParseFile(string path)
@@ -110,7 +158,7 @@ namespace FinalRelert2
             }
         }
 
-        public Dictionary<string, CINISection> Dict;
-        public string INIPath;
+        private Dictionary<string, CINISection> Dict { get; set; }
+        public string INIPath { get; private set; }
     }
 }
