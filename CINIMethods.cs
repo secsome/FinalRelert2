@@ -8,6 +8,8 @@ namespace FinalRelert2
 {
     class CINIMethods
     {
+        private CINIMethods() => throw new MethodAccessException();
+
         private static string TryGetString(string pSection, string pKey, Dictionary<string, CINISection> Dict)
         {
             if (!Dict.ContainsKey(pSection))

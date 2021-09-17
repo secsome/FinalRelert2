@@ -54,6 +54,7 @@
       <DependentUpon>CFinalSunDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="CINI.cs" />
+    <Compile Include="CINIMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -78,5 +79,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
