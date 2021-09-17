@@ -74,3 +74,4 @@ namespace FinalRelert2.FileSystem
         [FieldOffset(0x14)] public int Offset;
     }
 }
+
