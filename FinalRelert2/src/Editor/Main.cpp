@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         Init_Language();
         if (Init_Check())
         {
-            Init_App();
+            CApp::Run();
         }
 
         Uninit_MixFiles();

@@ -71,21 +71,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>include;thirdparty/imgui;$(IncludePath)</IncludePath>
+    <IncludePath>include;thirdparty/imgui;thirdparty/stb;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include;thirdparty/imgui;$(IncludePath)</IncludePath>
+    <IncludePath>include;thirdparty/imgui;thirdparty/stb;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>include;thirdparty/imgui;$(IncludePath)</IncludePath>
+    <IncludePath>include;thirdparty/imgui;thirdparty/stb;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>include;thirdparty/imgui;$(IncludePath)</IncludePath>
+    <IncludePath>include;thirdparty/imgui;thirdparty/stb;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -182,6 +182,7 @@
     <ClCompile Include="src\Algorithm\Random.cpp" />
     <ClCompile Include="src\Algorithm\SHA.cpp" />
     <ClCompile Include="src\Editor\CApp.cpp" />
+    <ClCompile Include="src\Editor\CMainDialog.cpp" />
     <ClCompile Include="src\Editor\Init.cpp" />
     <ClCompile Include="src\Editor\Main.cpp" />
     <ClCompile Include="src\IO\Base64Pipe.cpp" />
@@ -235,8 +236,11 @@
     <ClInclude Include="include\CApp.h" />
     <ClInclude Include="include\CCFile.h" />
     <ClInclude Include="include\CCINI.h" />
+    <ClInclude Include="include\CMainDialog.h" />
+    <ClInclude Include="include\CompileTimeMenu.h" />
     <ClInclude Include="include\Conquer.h" />
     <ClInclude Include="include\CRC.h" />
+    <ClInclude Include="include\CTriggerDialog.h" />
     <ClInclude Include="include\Defines.h" />
     <ClInclude Include="include\File.h" />
     <ClInclude Include="include\FilePipe.h" />

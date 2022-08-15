@@ -1,3 +1,7 @@
 [submodule "ImGui"]
 	path = FinalRelert2/thirdparty/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "stb"]
+	path = FinalRelert2/thirdparty/stb
+	url = https://github.com/nothings/stb
+	
