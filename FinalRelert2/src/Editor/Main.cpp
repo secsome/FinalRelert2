@@ -23,8 +23,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         Init_Random();
         Init_Keys();
 
-        //new MFCD(R"(C:\Users\30270\Desktop\TerminatorV1.6\expandmo89.mix)", &PKey::FastKey);
-
         Init_MixFiles();
         Init_Language();
         if (Init_Check())
