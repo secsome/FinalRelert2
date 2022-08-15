@@ -99,14 +99,6 @@ void Init_Language()
 		TextManagerClass::StringTable.Load(
 			std::format("stringtable{0:02d}.csf", i).c_str()
 		);
-
-	CCFileClass ccfile("rulesmd.ini");
-	if (ccfile.Open())
-	{
-		INIClass ini;
-		ini.Load(ccfile);
-		int x = ini.Get_Int("E1", "Cost");
-	}
 }
 
 bool Init_Check()

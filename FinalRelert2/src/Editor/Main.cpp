@@ -4,6 +4,8 @@
 #include <Init.h>
 #include <Uninit.h>
 
+#include <CApp.h>
+
 HINSTANCE ProgramInstance;
 DWORD MainThreadId;
 
@@ -27,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         Init_Language();
         if (Init_Check())
         {
-            // Init App
+            Init_App();
         }
 
         Uninit_MixFiles();

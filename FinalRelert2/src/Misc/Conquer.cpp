@@ -62,10 +62,10 @@ void Log_Close()
 HANDLE AppMutex;
 bool Setup_Mutex()
 {
-	AppMutex = CreateMutex(nullptr, FALSE, "4D01B245-DAA6-4351-9CD3-C2A172516EB7");
+	AppMutex = CreateMutex(nullptr, FALSE, "22457198-8780-45D2-BD23-D7736C257F47");
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
-		HWND hWnd = FindWindow("4D01B245-DAA6-4351-9CD3-C2A172516EB7", nullptr);
+		HWND hWnd = FindWindow("22457198-8780-45D2-BD23-D7736C257F47", nullptr);
 		if (hWnd != NULL)
 		{
 			SetForegroundWindow(hWnd);
