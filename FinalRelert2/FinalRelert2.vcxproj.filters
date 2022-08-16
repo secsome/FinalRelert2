@@ -159,6 +159,15 @@
     <ClCompile Include="src\Editor\LanguageManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\CMapData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\CLoading.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\stb_image_implementation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Vector.h">
@@ -333,6 +342,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\LanguageManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CMapData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CLoading.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

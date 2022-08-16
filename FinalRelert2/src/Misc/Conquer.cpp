@@ -71,11 +71,11 @@ bool Setup_Mutex()
 	AppMutex = CreateMutex(nullptr, FALSE, "22457198-8780-45D2-BD23-D7736C257F47");
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
-		HWND hWnd = FindWindow("22457198-8780-45D2-BD23-D7736C257F47", nullptr);
-		if (hWnd != NULL)
+		HWND hwnd = FindWindow("22457198-8780-45D2-BD23-D7736C257F47", nullptr);
+		if (hwnd != NULL)
 		{
-			SetForegroundWindow(hWnd);
-			ShowWindow(hWnd, SW_RESTORE);
+			SetForegroundWindow(hwnd);
+			ShowWindow(hwnd, SW_RESTORE);
 		}
 		if (AppMutex != NULL)
 		{

@@ -8,52 +8,42 @@
 #include <backends/imgui_impl_win32.h>
 
 #include <CMainDialog.h>
+#include <CLoading.h>
 
-// Data
-ID3D11Device* CApp::g_pd3dDevice = nullptr;
-ID3D11DeviceContext* CApp::g_pd3dDeviceContext = nullptr;
-IDXGISwapChain* CApp::g_pSwapChain = nullptr;
-ID3D11RenderTargetView* CApp::g_mainRenderTargetView = nullptr;
+CApp* theApp;
 
-// Forward declarations of helper functions
-bool CreateDeviceD3D(HWND hWnd);
-void CleanupDeviceD3D();
-void CreateRenderTarget();
-void CleanupRenderTarget();
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-bool CApp::Run()
+CApp::CApp()
 {
-    WNDCLASSEX wc = { 0 };
+    ZeroMemory(&wc, sizeof(wc));
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_CLASSDC;
     wc.lpfnWndProc = WndProc;
-    wc.hInstance = ProgramInstance; 
+    wc.hInstance = ProgramInstance;
     wc.lpszClassName = "Final Relert 2";
 
     ::RegisterClassEx(&wc);
-    HWND hwnd = ::CreateWindow(
+    hWnd = ::CreateWindow(
         wc.lpszClassName,
         "Final Relert 2 MainFrame",
         WS_OVERLAPPEDWINDOW,
         100, 100, 1280, 800,
         NULL,
-        NULL, 
+        NULL,
         wc.hInstance,
         NULL
     );
 
     // Initialize Direct3D
-    if (!CreateDeviceD3D(hwnd))
+    if (!CreateDeviceD3D())
     {
         CleanupDeviceD3D();
         ::UnregisterClass(wc.lpszClassName, wc.hInstance);
-        return false;
+        return;
     }
 
     // Show the window
-    ::ShowWindow(hwnd, SW_HIDE);
-    ::UpdateWindow(hwnd);
+    ::ShowWindow(hWnd, SW_HIDE);
+    ::UpdateWindow(hWnd);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -65,15 +55,15 @@ bool CApp::Run()
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
     io.ConfigViewportsNoAutoMerge = true;
-    
+
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
     //ImGui::StyleColorsClassic();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplWin32_Init(hwnd);
-    ImGui_ImplDX11_Init(CApp::g_pd3dDevice, CApp::g_pd3dDeviceContext);
+    ImGui_ImplWin32_Init(hWnd);
+    ImGui_ImplDX11_Init(pd3dDevice, pd3dDeviceContext);
 
     // Load Fonts
     // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -89,12 +79,28 @@ bool CApp::Run()
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
-    
 
+    Loader = new CLoading;
+    if (Loader == nullptr)
+        throw std::exception("Failed to create CLoading!");
+}
 
-    // Our state
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+CApp::~CApp()
+{
+    // Cleanup
+    delete Loader;
 
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
+
+    CleanupDeviceD3D();
+    ::DestroyWindow(hWnd);
+    ::UnregisterClass(wc.lpszClassName, wc.hInstance);
+}
+
+void CApp::Run()
+{
     // Main loop
     bool done = false;
     while (!done)
@@ -123,36 +129,22 @@ bool CApp::Run()
         ImGui::Render();
         
         // Update and Render additional Platform Windows
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
         }
 
-        const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
-        CApp::g_pd3dDeviceContext->OMSetRenderTargets(1, &CApp::g_mainRenderTargetView, nullptr);
-        CApp::g_pd3dDeviceContext->ClearRenderTargetView(CApp::g_mainRenderTargetView, clear_color_with_alpha);
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-        CApp::g_pSwapChain->Present(1, 0); // Present with vsync
-        //CApp::g_pSwapChain->Present(0, 0); // Present without vsync
+        constexpr bool VsyncEnabled = true;
+        pSwapChain->Present(VsyncEnabled, 0);
     }
-
-    // Cleanup
-    ImGui_ImplDX11_Shutdown();
-    ImGui_ImplWin32_Shutdown();
-    ImGui::DestroyContext();
-
-    CleanupDeviceD3D();
-    ::DestroyWindow(hwnd);
-    ::UnregisterClass(wc.lpszClassName, wc.hInstance);
-
-    return true;
 }
 
 // Helper functions
 
-bool CreateDeviceD3D(HWND hWnd)
+bool CApp::CreateDeviceD3D()
 {
     // Setup swap chain
     DXGI_SWAP_CHAIN_DESC sd;
@@ -175,71 +167,74 @@ bool CreateDeviceD3D(HWND hWnd)
     //createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
     D3D_FEATURE_LEVEL featureLevel;
     const D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
-    if (D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, featureLevelArray, 2, D3D11_SDK_VERSION, &sd, &CApp::g_pSwapChain, &CApp::g_pd3dDevice, &featureLevel, &CApp::g_pd3dDeviceContext) != S_OK)
+    if (D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, featureLevelArray, 2, D3D11_SDK_VERSION, &sd, &pSwapChain, &pd3dDevice, &featureLevel, &pd3dDeviceContext) != S_OK)
         return false;
 
     CreateRenderTarget();
     return true;
 }
 
-void CleanupDeviceD3D()
+void CApp::CleanupDeviceD3D()
 {
     CleanupRenderTarget();
-    if (CApp::g_pSwapChain) 
+    if (pSwapChain) 
     { 
-        CApp::g_pSwapChain->Release();
-        CApp::g_pSwapChain = nullptr;
+        pSwapChain->Release();
+        pSwapChain = nullptr;
     }
-    if (CApp::g_pd3dDeviceContext)
+    if (pd3dDeviceContext)
     { 
-        CApp::g_pd3dDeviceContext->Release();
-        CApp::g_pd3dDeviceContext = nullptr;
+        pd3dDeviceContext->Release();
+        pd3dDeviceContext = nullptr;
     }
-    if (CApp::g_pd3dDevice) 
+    if (pd3dDevice) 
     { 
-        CApp::g_pd3dDevice->Release(); 
-        CApp::g_pd3dDevice = nullptr; 
+        pd3dDevice->Release(); 
+        pd3dDevice = nullptr; 
     }
 }
 
-void CreateRenderTarget()
+void CApp::CreateRenderTarget()
 {
     ID3D11Texture2D* pBackBuffer;
-    CApp::g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
-    CApp::g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &CApp::g_mainRenderTargetView);
-    pBackBuffer->Release();
+    pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
+    if (pBackBuffer)
+    {
+        pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &mainRenderTargetView);
+        pBackBuffer->Release();
+    }
 }
 
-void CleanupRenderTarget()
+void CApp::CleanupRenderTarget()
 {
-    if (CApp::g_mainRenderTargetView) 
+    if (mainRenderTargetView) 
     {
-        CApp::g_mainRenderTargetView->Release();
-        CApp::g_mainRenderTargetView = nullptr;
+        mainRenderTargetView->Release();
+        mainRenderTargetView = nullptr;
     }
 }
 
 // Forward declare message handler from imgui_impl_win32.cpp
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Win32 message handler
 // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
 // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
 // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
 // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI CApp::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam))
         return true;
 
     switch (msg)
     {
     case WM_SIZE:
-        if (CApp::g_pd3dDevice != nullptr && wParam != SIZE_MINIMIZED)
+        if (theApp->pd3dDevice != nullptr && wParam != SIZE_MINIMIZED)
         {
-            CleanupRenderTarget();
-            CApp::g_pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
-            CreateRenderTarget();
+            theApp->CleanupRenderTarget();
+            theApp->pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
+            theApp->CreateRenderTarget();
         }
         return 0;
     case WM_SYSCOMMAND:
@@ -250,5 +245,5 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         ::PostQuitMessage(0);
         return 0;
     }
-    return ::DefWindowProc(hWnd, msg, wParam, lParam);
+    return ::DefWindowProc(hwnd, msg, wParam, lParam);
 }

@@ -402,7 +402,10 @@ double INIClass::Get_Double(const char* section, const char* entry, double defva
 
 bool INIClass::Put_Double(const char* section, const char* entry, double value)
 {
-	return false;
+	char buffer[MAX_LINE_LENGTH];
+
+	sprintf(buffer, "%lf", value);
+	return Put_String(section, entry, buffer);
 }
 
 bool INIClass::Put_String(const char* section, const char* entry, const char* string)

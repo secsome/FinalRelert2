@@ -31,7 +31,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         if (Init_Check())
         {
             if (LanguageManager::Current.Load("FinalRelert2.csf"))
-                CApp::Run();
+            {
+                if (theApp = new CApp)
+                {
+                    theApp->Run();
+                    delete theApp;
+                    theApp = nullptr;
+                }
+                else
+                    ::MessageBox(NULL, "Cannot create CApp!", "Error", MB_OK);
+            }
             else
                 ::MessageBox(NULL, "Cannot load FinalRelert2.csf!", "Error", MB_OK);
         }

@@ -7,10 +7,30 @@
 class CApp
 {
 public:
-    static ID3D11Device* g_pd3dDevice;
-    static ID3D11DeviceContext* g_pd3dDeviceContext;
-    static IDXGISwapChain* g_pSwapChain;
-    static ID3D11RenderTargetView* g_mainRenderTargetView;
+    explicit CApp();
+    virtual ~CApp();
 
-    static bool Run();
+    CLASS_NOCOPY(CApp);
+    CLASS_CANMOVE(CApp);
+
+    WNDCLASSEX wc;
+    HWND hWnd;
+    ID3D11Device* pd3dDevice;
+    ID3D11DeviceContext* pd3dDeviceContext;
+    IDXGISwapChain* pSwapChain;
+    ID3D11RenderTargetView* mainRenderTargetView;
+
+    void Run();
+
+    class CLoading* Loader;
+
+private:
+    bool CreateDeviceD3D();
+    void CleanupDeviceD3D();
+    void CreateRenderTarget();
+    void CleanupRenderTarget();
+
+    static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 };
+
+extern CApp* theApp;

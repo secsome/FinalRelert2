@@ -182,10 +182,13 @@
     <ClCompile Include="src\Algorithm\Random.cpp" />
     <ClCompile Include="src\Algorithm\SHA.cpp" />
     <ClCompile Include="src\Editor\CApp.cpp" />
+    <ClCompile Include="src\Editor\CLoading.cpp" />
     <ClCompile Include="src\Editor\CMainDialog.cpp" />
+    <ClCompile Include="src\Editor\CMapData.cpp" />
     <ClCompile Include="src\Editor\Init.cpp" />
     <ClCompile Include="src\Editor\LanguageManager.cpp" />
     <ClCompile Include="src\Editor\Main.cpp" />
+    <ClCompile Include="src\Editor\stb_image_implementation.cpp" />
     <ClCompile Include="src\IO\Base64Pipe.cpp" />
     <ClCompile Include="src\IO\Base64Straw.cpp" />
     <ClCompile Include="src\IO\BlowStraw.cpp" />
@@ -237,7 +240,9 @@
     <ClInclude Include="include\CApp.h" />
     <ClInclude Include="include\CCFile.h" />
     <ClInclude Include="include\CCINI.h" />
+    <ClInclude Include="include\CLoading.h" />
     <ClInclude Include="include\CMainDialog.h" />
+    <ClInclude Include="include\CMapData.h" />
     <ClInclude Include="include\CompileTimeMenu.h" />
     <ClInclude Include="include\Conquer.h" />
     <ClInclude Include="include\CRC.h" />
