@@ -47,12 +47,18 @@ void Log_Close()
 {
 	if (LogFile.Is_Open())
 	{
-		char buffer[_MAX_PATH];
 		unsigned int dt = LogFile.Get_Date_Time();
 
-		sprintf(buffer, "debug-%04d%02d%02d-%02d%02d%02d.log",
+		char drive[_MAX_PATH];
+		char dir[_MAX_PATH];
+		char filename[_MAX_PATH];
+		char ext[_MAX_PATH];
+		char buffer[_MAX_PATH];
+		_splitpath(LogFile.File_Name(), drive, dir, nullptr, ext);
+		sprintf(filename, "debug-%04d%02d%02d-%02d%02d%02d",
 			YEAR(dt), MONTH(dt), DAY(dt), HOUR(dt), MINUTE(dt), SECOND(dt));
-		
+		_makepath(buffer, drive, dir, filename, ".log");
+
 		LogFile.Close();
 
 		MoveFile(LogFile.File_Name(), buffer);

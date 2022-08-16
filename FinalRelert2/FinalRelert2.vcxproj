@@ -184,6 +184,7 @@
     <ClCompile Include="src\Editor\CApp.cpp" />
     <ClCompile Include="src\Editor\CMainDialog.cpp" />
     <ClCompile Include="src\Editor\Init.cpp" />
+    <ClCompile Include="src\Editor\LanguageManager.cpp" />
     <ClCompile Include="src\Editor\Main.cpp" />
     <ClCompile Include="src\IO\Base64Pipe.cpp" />
     <ClCompile Include="src\IO\Base64Straw.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="include\INI.h" />
     <ClInclude Include="include\Init.h" />
     <ClInclude Include="include\Int.h" />
+    <ClInclude Include="include\LanguageManager.h" />
     <ClInclude Include="include\ListNode.h" />
     <ClInclude Include="include\LZO.h" />
     <ClInclude Include="include\LZO1X.h" />

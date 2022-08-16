@@ -4,8 +4,7 @@
 
 #include <imgui.h>
 
-#include <array>
-#include <string_view>
+#include <LanguageManager.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -66,7 +65,7 @@ bool CMainDialog::ProcessFrame()
 
     ImGui::Begin("FinalRelert 2(tm) - No map loaded", nullptr, ImGuiWindowFlags_MenuBar);
 
-    ProcessMenus<MenuTuple>(done);
+    Menu_Handler(done);
 
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 
         1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -76,7 +75,30 @@ bool CMainDialog::ProcessFrame()
     return done;
 }
 
+void CMainDialog::Menu_Handler(bool& done)
+{
+    if (ImGui::BeginMenuBar())
+    {
+        Menu_File_Handler(done);
+
+        ImGui::EndMenuBar();
+    }
+}
+
+void CMainDialog::Menu_File_Handler(bool& done)
+{
+    if (ImGui::BeginMenu(LanguageManager::Current["CMainDialog_Menu_File"]))
+    {
+        Menu_File_Exit_Handler(done);
+
+        ImGui::EndMenu();
+    }
+}
+
 void CMainDialog::Menu_File_Exit_Handler(bool& done)
 {
-    done = true;
+    if (ImGui::MenuItem(LanguageManager::Current["CMainDialog_Menu_File_Exit"]))
+    {
+        done = true;
+    }
 }

@@ -8,7 +8,6 @@ class TextManagerClass
 {
 public:
 	static TextManagerClass StringTable;
-	static TextManagerClass EditorLanguage;
 
 	explicit TextManagerClass() noexcept = default;
 
@@ -24,7 +23,7 @@ public:
 
 	const wchar_t* operator[](const char* label);
 
-private:
+protected:
 	struct labelcomp
 	{
 		bool operator()(const std::string& k1, const std::string& k2) const
@@ -33,6 +32,6 @@ private:
 		};
 	};
 
-private:
+protected:
 	std::map<std::string, std::wstring, labelcomp> Texts;
 };

@@ -5,6 +5,7 @@
 #include <Uninit.h>
 
 #include <CApp.h>
+#include <LanguageManager.h>
 
 HINSTANCE ProgramInstance;
 DWORD MainThreadId;
@@ -29,7 +30,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         Init_Language();
         if (Init_Check())
         {
-            CApp::Run();
+            if (LanguageManager::Current.Load("FinalRelert2.csf"))
+                CApp::Run();
+            else
+                ::MessageBox(NULL, "Cannot load FinalRelert2.csf!", "Error", MB_OK);
         }
 
         Uninit_MixFiles();
