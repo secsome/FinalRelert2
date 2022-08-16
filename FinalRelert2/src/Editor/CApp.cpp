@@ -10,10 +10,10 @@
 #include <CMainDialog.h>
 
 // Data
-ID3D11Device* CApp::g_pd3dDevice = NULL;
-ID3D11DeviceContext* CApp::g_pd3dDeviceContext = NULL;
-IDXGISwapChain* CApp::g_pSwapChain = NULL;
-ID3D11RenderTargetView* CApp::g_mainRenderTargetView = NULL;
+ID3D11Device* CApp::g_pd3dDevice = nullptr;
+ID3D11DeviceContext* CApp::g_pd3dDeviceContext = nullptr;
+IDXGISwapChain* CApp::g_pSwapChain = nullptr;
+ID3D11RenderTargetView* CApp::g_mainRenderTargetView = nullptr;
 
 // Forward declarations of helper functions
 bool CreateDeviceD3D(HWND hWnd);

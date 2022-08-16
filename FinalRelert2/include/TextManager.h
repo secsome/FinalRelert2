@@ -8,6 +8,7 @@ class TextManagerClass
 {
 public:
 	static TextManagerClass StringTable;
+	static TextManagerClass EditorLanguage;
 
 	explicit TextManagerClass() noexcept = default;
 

@@ -4,4 +4,3 @@
 [submodule "stb"]
 	path = FinalRelert2/thirdparty/stb
 	url = https://github.com/nothings/stb
-	

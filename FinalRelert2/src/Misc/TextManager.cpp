@@ -5,6 +5,7 @@
 #include <CCFile.h>
 
 TextManagerClass TextManagerClass::StringTable;
+TextManagerClass TextManagerClass::EditorLanguage;
 
 bool TextManagerClass::Load(const char* file)
 {
