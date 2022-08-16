@@ -4,8 +4,6 @@
 
 #include <d3d11.h>
 
-ID3D11ShaderResourceView* LoadTextureFromFile(const char* filename, int& out_width, int& out_height);
-
 class CMainDialog
 {
 public:
@@ -18,4 +16,6 @@ public:
     static void Menu_File_Save_Handler(bool& done);
     static void Menu_File_SaveAs_Handler(bool& done);
     static void Menu_File_Exit_Handler(bool& done);
+
+    static void Dialog_Handler();
 };

@@ -15,6 +15,8 @@ public:
 
     ID3D11ShaderResourceView* LoadTextureFromFile(const char* filename, int& out_width, int& out_height);
 
+    bool LoadMap(const char* filename);
+
 private:
 
 };

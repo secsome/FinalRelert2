@@ -5,6 +5,8 @@
 #include <stb_image.h>
 
 #include <CCFile.h>
+#include <INI.h>
+#include <CMapData.h>
 
 CLoading::CLoading()
 {
@@ -73,4 +75,23 @@ ID3D11ShaderResourceView* CLoading::LoadTextureFromFile(const char* filename, in
     stbi_image_free(image_data);
 
     return ret;
-};
+}
+
+bool CLoading::LoadMap(const char* filename)
+{
+    BufferIOFileClass file(filename);
+    if (!file.Open())
+        return false;
+
+    auto& ini = Map.MapFile;
+
+    if (!ini.Load(file))
+        return false;
+
+    if (!ini.Is_Present("Map", "Theater"))
+        return false;
+
+
+
+    return true;
+}

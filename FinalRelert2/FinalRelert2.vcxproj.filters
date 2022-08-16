@@ -168,6 +168,21 @@
     <ClCompile Include="src\Editor\stb_image_implementation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\CTrigger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\CTag.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\CScripttype.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\CTeamtype.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\CTaskforce.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Vector.h">
@@ -348,6 +363,24 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\CLoading.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Theater.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CTrigger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CTag.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CTeamtype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CTaskforce.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CScripttype.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

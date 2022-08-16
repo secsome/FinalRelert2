@@ -12,7 +12,14 @@ public:
     CLASS_NOCOPY(CMapData);
     CLASS_NOMOVE(CMapData);
 
-    INIClass Map;
+    INIClass MapFile;
+    struct
+    {
+        int Left;
+        int Top;
+        int Width;
+        int Height;
+    } MapSize;
 };
 
 extern CMapData Map;

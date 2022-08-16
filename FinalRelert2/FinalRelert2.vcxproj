@@ -185,6 +185,11 @@
     <ClCompile Include="src\Editor\CLoading.cpp" />
     <ClCompile Include="src\Editor\CMainDialog.cpp" />
     <ClCompile Include="src\Editor\CMapData.cpp" />
+    <ClCompile Include="src\Editor\CScripttype.cpp" />
+    <ClCompile Include="src\Editor\CTag.cpp" />
+    <ClCompile Include="src\Editor\CTaskforce.cpp" />
+    <ClCompile Include="src\Editor\CTeamtype.cpp" />
+    <ClCompile Include="src\Editor\CTrigger.cpp" />
     <ClCompile Include="src\Editor\Init.cpp" />
     <ClCompile Include="src\Editor\LanguageManager.cpp" />
     <ClCompile Include="src\Editor\Main.cpp" />
@@ -246,6 +251,11 @@
     <ClInclude Include="include\CompileTimeMenu.h" />
     <ClInclude Include="include\Conquer.h" />
     <ClInclude Include="include\CRC.h" />
+    <ClInclude Include="include\CScripttype.h" />
+    <ClInclude Include="include\CTag.h" />
+    <ClInclude Include="include\CTaskforce.h" />
+    <ClInclude Include="include\CTeamtype.h" />
+    <ClInclude Include="include\CTrigger.h" />
     <ClInclude Include="include\CTriggerDialog.h" />
     <ClInclude Include="include\Defines.h" />
     <ClInclude Include="include\File.h" />
@@ -276,6 +286,7 @@
     <ClInclude Include="include\SHAStraw.h" />
     <ClInclude Include="include\Straw.h" />
     <ClInclude Include="include\TextManager.h" />
+    <ClInclude Include="include\Theater.h" />
     <ClInclude Include="include\Uninit.h" />
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="thirdparty\imgui\backends\imgui_impl_dx11.h" />
