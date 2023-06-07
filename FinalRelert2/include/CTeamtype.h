@@ -5,5 +5,7 @@
 class CTeamtype
 {
 public:
-    static void Handle();
+    static CTeamtype Instance;
+    
+    void Handle();
 };

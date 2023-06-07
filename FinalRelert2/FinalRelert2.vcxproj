@@ -31,6 +31,8 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+    <EnableFuzzer>false</EnableFuzzer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -38,12 +40,16 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+    <EnableFuzzer>false</EnableFuzzer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+    <EnableFuzzer>false</EnableFuzzer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -51,6 +57,8 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+    <EnableFuzzer>false</EnableFuzzer>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -196,6 +204,7 @@
     <ClCompile Include="src\Editor\stb_image_implementation.cpp" />
     <ClCompile Include="src\IO\Base64Pipe.cpp" />
     <ClCompile Include="src\IO\Base64Straw.cpp" />
+    <ClCompile Include="src\IO\BlowPipe.cpp" />
     <ClCompile Include="src\IO\BlowStraw.cpp" />
     <ClCompile Include="src\IO\BufferIOFile.cpp" />
     <ClCompile Include="src\IO\BufferPipe.cpp" />
@@ -209,6 +218,7 @@
     <ClCompile Include="src\IO\LZOStraw.cpp" />
     <ClCompile Include="src\IO\MixFile.cpp" />
     <ClCompile Include="src\IO\Pipe.cpp" />
+    <ClCompile Include="src\IO\PKPipe.cpp" />
     <ClCompile Include="src\IO\PKStraw.cpp" />
     <ClCompile Include="src\IO\RAMFile.cpp" />
     <ClCompile Include="src\IO\RandomStraw.cpp" />
@@ -221,6 +231,7 @@
     <ClCompile Include="src\Misc\Conquer.cpp" />
     <ClCompile Include="src\Misc\Int.cpp" />
     <ClCompile Include="src\Misc\MP.cpp" />
+    <ClCompile Include="src\Misc\Rect.cpp" />
     <ClCompile Include="src\Misc\TextManager.cpp" />
     <ClCompile Include="thirdparty\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="thirdparty\imgui\backends\imgui_impl_win32.cpp" />
@@ -236,6 +247,7 @@
     <ClInclude Include="include\Base64Pipe.h" />
     <ClInclude Include="include\Base64Straw.h" />
     <ClInclude Include="include\Blowfish.h" />
+    <ClInclude Include="include\BlowPipe.h" />
     <ClInclude Include="include\BlowStraw.h" />
     <ClInclude Include="include\Buffer.h" />
     <ClInclude Include="include\BufferIOFile.h" />
@@ -245,6 +257,7 @@
     <ClInclude Include="include\CApp.h" />
     <ClInclude Include="include\CCFile.h" />
     <ClInclude Include="include\CCINI.h" />
+    <ClInclude Include="include\CellClass.h" />
     <ClInclude Include="include\CLoading.h" />
     <ClInclude Include="include\CMainDialog.h" />
     <ClInclude Include="include\CMapData.h" />
@@ -261,6 +274,7 @@
     <ClInclude Include="include\File.h" />
     <ClInclude Include="include\FilePipe.h" />
     <ClInclude Include="include\FileStraw.h" />
+    <ClInclude Include="include\Concepts.h" />
     <ClInclude Include="include\INI.h" />
     <ClInclude Include="include\Init.h" />
     <ClInclude Include="include\Int.h" />
@@ -274,12 +288,14 @@
     <ClInclude Include="include\MP.h" />
     <ClInclude Include="include\Pipe.h" />
     <ClInclude Include="include\PKey.h" />
+    <ClInclude Include="include\PKPipe.h" />
     <ClInclude Include="include\PKStraw.h" />
     <ClInclude Include="include\RAMFile.h" />
     <ClInclude Include="include\Random.h" />
     <ClInclude Include="include\RandomStraw.h" />
     <ClInclude Include="include\RawFile.h" />
     <ClInclude Include="include\ReadLine.h" />
+    <ClInclude Include="include\Rect.h" />
     <ClInclude Include="include\Search.h" />
     <ClInclude Include="include\SHA.h" />
     <ClInclude Include="include\SHAPipe.h" />

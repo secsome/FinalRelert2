@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+CTeamtype CTeamtype::Instance;
+
 void CTeamtype::Handle()
 {
     static bool is_open;

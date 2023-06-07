@@ -5,5 +5,7 @@
 class CTag
 {
 public:
-    static void Handle();
+    static CTag Instance;
+
+    void Handle();
 };

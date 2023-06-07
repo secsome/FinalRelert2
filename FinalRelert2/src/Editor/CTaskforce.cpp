@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+CTaskforce CTaskforce::Instance;
+
 void CTaskforce::Handle()
 {
     static bool is_open;

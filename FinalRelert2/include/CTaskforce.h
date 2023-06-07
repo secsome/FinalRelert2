@@ -5,5 +5,7 @@
 class CTaskforce
 {
 public:
-    static void Handle();
+    static CTaskforce Instance;
+
+    void Handle();
 };

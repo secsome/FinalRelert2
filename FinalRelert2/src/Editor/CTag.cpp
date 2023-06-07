@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+CTag CTag::Instance;
+
 void CTag::Handle()
 {
     static bool is_open;

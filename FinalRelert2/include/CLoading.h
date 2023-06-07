@@ -17,6 +17,7 @@ public:
 
     bool LoadMap(const char* filename);
 
+    std::string CurrentMapPath;
 private:
-
+    
 };

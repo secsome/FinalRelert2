@@ -9,6 +9,7 @@
 #include <CRC.h>
 #include <ListNode.h>
 #include <Search.h>
+#include <Rect.h>
 
 class INIClass
 {
@@ -35,6 +36,7 @@ public:
 	int Entry_Count(const char* section) const;
 	const char* Get_Entry(const char* section, int index) const;
 
+	double Get_Double(const char* section, const char* entry, double defvalue) const;
 	int Get_String(const char* section, const char* entry, const char* defvalue, char* buffer, int size) const;
 	int Get_Int(const char* section, const char* entry, int defvalue = 0) const;
 	int Get_Hex(const char* section, const char* entry, int defvalue = 0) const;
@@ -42,7 +44,7 @@ public:
 	int Get_TextBlock(const char* section, char* buffer, int len) const;
 	int Get_UUBlock(const char* section, void* buffer, int len) const;
 	PKey Get_PKey(bool fast) const;
-	double Get_Double(const char* section, const char* entry, double defvalue) const;
+	Rect Get_Rect(const char* section, const char* entry, Rect defvalue) const;
 
 	bool Put_Double(const char* section, const char* entry, double value);
 	bool Put_String(const char* section, const char* entry, const char* string);
@@ -52,6 +54,7 @@ public:
 	bool Put_TextBlock(const char* section, const char* text);
 	bool Put_UUBlock(const char* section, void const* block, int len);
 	bool Put_PKey(PKey const& key);
+	bool Put_Rect(const char* section, const char* entry, const Rect& value);
 
 protected:
 	enum { MAX_LINE_LENGTH = 2048 };

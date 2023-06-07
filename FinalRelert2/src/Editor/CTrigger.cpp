@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+CTrigger CTrigger::Instance;
+
 void CTrigger::Handle()
 {
     static bool is_open;

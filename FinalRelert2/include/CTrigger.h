@@ -5,5 +5,7 @@
 class CTrigger
 {
 public:
-    static void Handle();
+    static CTrigger Instance;
+
+    void Handle();
 };

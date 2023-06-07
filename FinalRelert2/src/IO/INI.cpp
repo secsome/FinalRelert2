@@ -388,6 +388,18 @@ PKey INIClass::Get_PKey(bool fast) const
 	return key;
 }
 
+Rect INIClass::Get_Rect(const char* section, const char* entry, Rect defvalue) const
+{
+	if (section == nullptr || entry == nullptr)
+		return defvalue;
+
+	INIEntry* entryptr = Find_Entry(section, entry);
+	if (entryptr && entryptr->Value != nullptr)
+		sscanf(entryptr->Value, "%d,%d,%d,%d", &defvalue.X, &defvalue.Y, &defvalue.Width, &defvalue.Height);
+
+	return defvalue;
+}
+
 double INIClass::Get_Double(const char* section, const char* entry, double defvalue) const
 {
 	if (section == nullptr || entry == nullptr)
@@ -570,6 +582,15 @@ bool INIClass::Put_PKey(PKey const& key)
 	Put_UUBlock("PrivateKey", buffer, len);
 
 	return true;
+}
+
+bool INIClass::Put_Rect(const char* section, const char* entry, const Rect& value)
+{
+	char buffer[MAX_LINE_LENGTH];
+
+	sprintf(buffer, "%d,%d,%d,%d", value.X, value.Y, value.Width, value.Height);
+
+	return Put_String(section, entry, buffer);
 }
 
 void INIClass::Strip_Comments(char* buffer)

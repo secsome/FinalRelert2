@@ -21,9 +21,14 @@ bool CMainDialog::ProcessFrame()
 
     Dialog_Handler();
 
+    if (theApp->Loader->CurrentMapPath.empty())
+        ImGui::Text("No map loaded yet");
+    else
+        ImGui::Text("Current map: %s", theApp->Loader->CurrentMapPath.c_str());
+
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 
         1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
+    
     ImGui::End();
 
     return done;
@@ -87,7 +92,11 @@ void CMainDialog::Menu_File_Open_Handler(bool& done)
         ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_EXPLORER;
         if (::GetOpenFileName(&ofn))
         {
-            if (!theApp->Loader->LoadMap(buffer))
+            if (theApp->Loader->LoadMap(buffer))
+            {
+                theApp->Loader->CurrentMapPath = buffer;
+            }
+            else
                 ::MessageBox(NULL, "Failed to load the map.", "Error", MB_OK);
         }
     }
@@ -127,9 +136,9 @@ void CMainDialog::Menu_File_Exit_Handler(bool& done)
 
 void CMainDialog::Dialog_Handler()
 {
-    CTrigger::Handle();
-    CTag::Handle();
-    CTaskforce::Handle();
-    CScripttype::Handle();
-    CTeamtype::Handle();
+    CTrigger::Instance.Handle();
+    ImGui::SameLine(); CTag::Instance.Handle();
+    ImGui::SameLine(); CTaskforce::Instance.Handle();
+    ImGui::SameLine(); CScripttype::Instance.Handle();
+    ImGui::SameLine(); CTeamtype::Instance.Handle();
 }

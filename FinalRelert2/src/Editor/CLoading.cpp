@@ -83,15 +83,8 @@ bool CLoading::LoadMap(const char* filename)
     if (!file.Open())
         return false;
 
-    auto& ini = Map.MapFile;
-
-    if (!ini.Load(file))
+    if (!Map.MapFile.Load(file))
         return false;
 
-    if (!ini.Is_Present("Map", "Theater"))
-        return false;
-
-
-
-    return true;
+    return Map.LoadMap();
 }

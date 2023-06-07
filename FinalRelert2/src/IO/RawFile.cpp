@@ -256,7 +256,7 @@ int RawFileClass::Seek(int pos, int dir)
 		case SEEK_SET:
 			if (pos > BiasLength)
 				pos = BiasLength;
-
+				
 			pos += BiasStart;
 			break;
 

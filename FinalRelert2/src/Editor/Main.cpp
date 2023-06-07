@@ -10,6 +10,8 @@
 HINSTANCE ProgramInstance;
 DWORD MainThreadId;
 
+#include <CCINI.h>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     ProgramInstance = hInstance;

@@ -1,5 +1,7 @@
 #include "CRC.h"
 
+#include <bit>
+
 CRCEngine::CRCEngine(int initial) noexcept
 	: CRC{ initial }
 	, Index{ 0 }
@@ -61,7 +63,7 @@ int CRCEngine::operator()(const void* buffer, int length)
 		}
 	}
 
-	return(Value());
+	return Value();
 }
 
 CRCEngine::operator int() const

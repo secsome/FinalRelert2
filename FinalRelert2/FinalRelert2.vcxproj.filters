@@ -183,6 +183,15 @@
     <ClCompile Include="src\Editor\CTaskforce.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Misc\Rect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IO\BlowPipe.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IO\PKPipe.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Vector.h">
@@ -381,6 +390,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\CScripttype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Concepts.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CellClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Rect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PKPipe.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BlowPipe.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
